@@ -1,0 +1,30 @@
+version: "3.9"
+   
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    environment:
+      - DB_ENGINE=${PGENGINE}
+      - DB_NAME=${PGDATABASE}
+      - DB_USER=${PGUSER}
+      - DB_PASSWORD=${PGPASSWORD}
+      - DB_HOST=${PGHOST}
+      - DB_PORT=${PGPORT}
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:3000
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_ENGINE=${PGENGINE}
+      - DB_NAME=${PGDATABASE}
+      - DB_USER=${PGUSER}
+      - DB_PASSWORD=${PGPASSWORD}
+      - DB_HOST=${PGHOST}
+      - DB_PORT=${PGPORT}
+    depends_on:
+      - db
