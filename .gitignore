@@ -120,7 +120,7 @@ sftp-config.json
 # Backup files # 
 *.bak 
 
-pgdata/
+data/
 
 venv/
 
