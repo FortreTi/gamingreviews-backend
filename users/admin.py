@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from cinema.models import User, Post
+from users.models import User
 
 # Register your models here.
 
@@ -9,4 +9,3 @@ from cinema.models import User, Post
 class UserAdmin(admin.ModelAdmin):
     list_display = ("email", "name")
 
-admin.site.register(Post)
