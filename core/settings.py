@@ -15,11 +15,12 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DB_NAME = os.getenv('PGNAME')
-DB_USER = os.getenv('PGUSER')
-DB_PASSWORD = os.getenv('PGPASSWORD')
-DB_HOST = os.getenv('PGHOST')
-DB_PORT = os.getenv('PGPORT')
+DB_ENGINE = os.getenv('DB_ENGINE')
+DB_NAME = os.getenv('DB_NAME')
+DB_USER = os.getenv('DB_USER')
+DB_PASSWORD = os.getenv('DB_PASSWORD')
+DB_HOST = os.getenv('DB_HOST')
+DB_PORT = os.getenv('DB_PORT')
 
 
 # Quick-start development settings - unsuitable for production
@@ -43,7 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cinema'
+    'cinema',
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'rest_framework_swagger',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -82,12 +87,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': DB_ENGINE,
         'NAME': DB_NAME,
         'USER': DB_USER,
         'PASSWORD': DB_PASSWORD,
-        'PORT': DB_PORT,
-        'HOST': DB_HOST
+        'HOST': DB_HOST,
+        'PORT': DB_PORT
     }
 }
 
@@ -132,3 +137,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+REST_FRAMEWORK = {
+        'DEFAULT_PERMISSIONS_CLASSES': [
+            'rest_framework.permissions.DjangoModelPermissionsOrAnoReadOnly'
+            ]
+        }
+

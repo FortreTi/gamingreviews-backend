@@ -4,14 +4,14 @@ services:
   db:
     image: postgres
     volumes:
-      - ./pgdata:/var/lib/postgresql/data
+      - ./data/db:/var/lib/postgresql/data
     environment:
-      - DB_ENGINE=${PGENGINE}
-      - DB_NAME=${PGDATABASE}
-      - DB_USER=${PGUSER}
-      - DB_PASSWORD=${PGPASSWORD}
-      - DB_HOST=${PGHOST}
-      - DB_PORT=${PGPORT}
+      - POSTGRES_ENGINE=${DB_ENGINE}
+      - POSTGRES_NAME=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_HOST=${DB_HOST}
+      - POSTGRES_PORT=${DB_PORT}
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:3000
@@ -20,11 +20,13 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - DB_ENGINE=${PGENGINE}
-      - DB_NAME=${PGDATABASE}
-      - DB_USER=${PGUSER}
-      - DB_PASSWORD=${PGPASSWORD}
-      - DB_HOST=${PGHOST}
-      - DB_PORT=${PGPORT}
+      - POSTGRES_ENGINE=${DB_ENGINE}
+      - POSTGRES_NAME=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_HOST=${DB_HOST}
+      - POSTGRES_PORT=${DB_PORT}
     depends_on:
       - db
+    env_file:
+      - .env
